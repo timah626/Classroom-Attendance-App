@@ -3,7 +3,7 @@ interface Drawable {
     fun draw()
 }
 
-// Circle class implementing Drawable
+// Circle class implementing Drawabl
 class Circle(val radius: Int) : Drawable {
     override fun draw() {
         println("Circle with radius $radius:")
