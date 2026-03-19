@@ -1,9 +1,7 @@
 package com.example.demogradecalculator
 
-
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.apache.poi.ss.usermodel.WorkbookFactory
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
@@ -15,17 +13,26 @@ fun readStudentsFromExcel(filePath: String): List<Student> {
 
     for (i in 1 until sheet.physicalNumberOfRows) {
         val row = sheet.getRow(i) ?: continue
+
         val name = when (row.getCell(0)?.cellType) {
             CellType.STRING -> row.getCell(0).stringCellValue
             CellType.NUMERIC -> row.getCell(0).numericCellValue.toInt().toString()
             else -> "Unknown"
         }
-        val score = when (row.getCell(1)?.cellType) {
+
+        val caMark = when (row.getCell(1)?.cellType) {
             CellType.NUMERIC -> row.getCell(1).numericCellValue.toInt()
             CellType.STRING -> row.getCell(1).stringCellValue.toIntOrNull()
             else -> null
         }
-        students.add(Student(name, score))
+
+        val examMark = when (row.getCell(2)?.cellType) {
+            CellType.NUMERIC -> row.getCell(2).numericCellValue.toInt()
+            CellType.STRING -> row.getCell(2).stringCellValue.toIntOrNull()
+            else -> null
+        }
+
+        students.add(Student(name, examMark, caMark))
     }
 
     workbook.close()
@@ -38,14 +45,18 @@ fun writeResultsToExcel(students: List<Student>, outputPath: String) {
 
     val header = sheet.createRow(0)
     header.createCell(0).setCellValue("Name")
-    header.createCell(1).setCellValue("Score")
-    header.createCell(2).setCellValue("Grade")
+    header.createCell(1).setCellValue("CA Mark (/30)")
+    header.createCell(2).setCellValue("Exam Mark (/70)")
+    header.createCell(3).setCellValue("Total Score (/100)")
+    header.createCell(4).setCellValue("Grade")
 
     students.forEachIndexed { index, student ->
         val row = sheet.createRow(index + 1)
         row.createCell(0).setCellValue(student.name)
-        row.createCell(1).setCellValue(student.score?.toString() ?: "N/A")
-        row.createCell(2).setCellValue(student.grade)
+        row.createCell(1).setCellValue(student.ca_mark?.toString() ?: "N/A")
+        row.createCell(2).setCellValue(student.exam_mark?.toString() ?: "N/A")
+        row.createCell(3).setCellValue(student.score.toString())
+        row.createCell(4).setCellValue(student.grade)
     }
 
     val out = FileOutputStream(File(outputPath))
