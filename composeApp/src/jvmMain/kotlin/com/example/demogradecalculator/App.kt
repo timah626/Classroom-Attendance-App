@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import java.awt.FileDialog
@@ -35,10 +36,12 @@ fun App() {
                 .background(MaterialTheme.colorScheme.background)
                 .padding(32.dp)
         ) {
-            Column(verticalArrangement = Arrangement.spacedBy(24.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(30.dp),
+                horizontalAlignment = Alignment.CenterHorizontally) {
+
 
                 // Header
-                 Column {
+                {/* Column {
                     Text(
                         "Grade Calculator",
                         fontSize = 28.sp,
@@ -50,7 +53,31 @@ fun App() {
                         fontSize = 14.sp,
                         color = Color(0xFF6B7280)
                     )
+                } */}
+                Column(
+                    modifier = Modifier.fillMaxWidth(), // takes full width
+                    horizontalAlignment = Alignment.CenterHorizontally // centers children
+                ) {
+                    Text(
+                        text = "Grade Calculator",
+                        modifier = Modifier.padding(top = 52.dp),
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF1A1A2E),
+                        textAlign = TextAlign.Center // centers text inside
+                    )
+
+                    Text(
+                        text = "Import an Excel file to calculate student grades",
+                        modifier = Modifier.padding(top = 14.dp),
+                        fontSize = 14.sp,
+                        color = Color(0xFF6B7280),
+                        textAlign = TextAlign.Center
+                    )
                 }
+
+
+
 
                 // Upload button
                 Button(
