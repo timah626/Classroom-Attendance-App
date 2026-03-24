@@ -1,0 +1,36 @@
+name: gradecalculator
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # ── Added for Milestone 2 ──────────────────────────────────
+  # Read and write .xlsx files
+  excel: ^4.0.6
+
+  # Native file picker dialog (lets user browse for the .xlsx)
+  file_picker: ^8.1.2
+
+  # Access the device's documents directory to save the export
+  path_provider: ^2.1.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # path is a dev/utility package – fine to keep here
+  path: ^1.9.0
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
