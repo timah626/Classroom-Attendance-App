@@ -10,13 +10,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.testapplication2.ui.theme.TestApplication2Theme
+import com.example.testapplication2.authUI.*
+import com.example.testapplication2.studentUI.*
+import com.example.testapplication2.teacherUI.*
+import com.example.testapplication2.repositories.fetchConfirmedStats
+
 import io.github.jan.supabase.auth.auth
+
+
+
+
+
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         enableEdgeToEdge()
         setContent {
             TestApplication2Theme {
@@ -114,12 +124,10 @@ class MainActivity : ComponentActivity() {
                             classId       = back.arguments?.getString("classId") ?: "",
                             className     = java.net.URLDecoder.decode(
                                 back.arguments?.getString("className") ?: "", "UTF-8"
-                            )
+                            ),
+                            fetchConfirmedStats = ::fetchConfirmedStats  // your repository function
                         )
                     }
-
-
-
 
                     composable("sessionHistory/{classId}/{className}") { back ->
                         SessionHistoryPage(
@@ -132,8 +140,6 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-
-
                     composable("sessionDetail/{sessionId}/{classId}/{sessionDate}") { back ->
                         SessionDetailPage(
                             navController = navController,
@@ -145,7 +151,6 @@ class MainActivity : ComponentActivity() {
                             )
                         )
                     }
-
 
                     composable("debug") {
                         val currentUserId = supabase.auth.currentUserOrNull()?.id ?: ""
@@ -160,7 +165,8 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             supabase = supabase,
                             sessionId = "",
-                            classId = ""
+                            classId = "" ,
+                            //className = ""
                         )
                     }
                 }
